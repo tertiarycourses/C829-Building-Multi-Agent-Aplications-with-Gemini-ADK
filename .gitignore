@@ -1,0 +1,29 @@
+# Operating-system files
+.DS_Store
+Thumbs.db
+
+# Secrets — keep the documented placeholder only
+.env
+*.env
+!.env.example
+
+# Python environments and caches
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Tooling, logs, and temporary output
+.playwright-mcp/
+*.log
+~$*
+.~lock.*
+preview-*.png
+
+# Local reference material and rebuildable archives
+reference/
+*.zip
+courseware/archive/
+
+# Learner working copy created by the labs
+/work/

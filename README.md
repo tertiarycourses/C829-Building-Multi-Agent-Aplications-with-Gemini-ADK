@@ -10,7 +10,7 @@
 
 **Hands-on courseware and connected labs for designing, building, testing, and preparing production-grade multi-agent applications with Google Agent Development Kit and Gemini.**
 
-[Course Page](https://www.tertiarycourses.com.sg/building-multi-agent-aplications-with-gemini-adk.html) · [Learner Guide](LEARNER-GUIDE.md) · [Labs](labs/README.md) · [Report a Bug](https://github.com/tertiarycourses/C829-Building-Multi-Agent-Aplications-with-Gemini-ADK/issues)
+[Course Page](https://www.tertiarycourses.com.sg/building-multi-agent-aplications-with-gemini-adk.html) · [Learner Guide](<LG-Building Multi Agent Aplications with Gemini ADK (C829).md>) · [Labs](labs/README.md) · [Report a Bug](https://github.com/tertiarycourses/C829-Building-Multi-Agent-Aplications-with-Gemini-ADK/issues)
 
 </div>
 
@@ -24,13 +24,13 @@
 
 This repository contains the slide deck, Learner Guide, Lesson Plan, and eight connected hands-on labs for course C829. Learners progressively build **SupportOps**, a multi-agent service-operations assistant that can classify requests, use tools, retain session context, route work to specialists, connect to an MCP server, and apply production guardrails.
 
-The implementation targets **Google ADK 2.5.0** and the stable **Gemini 3.6 Flash** model. Course examples use synthetic support tickets and placeholder secrets only.
+The implementation targets **Google ADK 2.5.0** and the stable **Gemini 3.6 Flash** model. Course examples use synthetic support tickets and placeholder secrets only. The requirements deliberately pin the MCP Python SDK to the compatible 1.x API (`mcp==1.29.0`) used by the ADK 2.5 MCP integration.
 
 ### What You Will Learn
 
 | Topic | Focus | Working outcome |
 |---|---|---|
-| **1. Single Agent Foundations** | Agent lifecycle, model instructions, structured output, sessions | A runnable ticket-triage agent with typed JSON output |
+| **1. Single Agent Foundations** | Agent lifecycle, model instructions, structured output, sessions | A runnable ticket-triage agent with typed JSON output in active session state |
 | **2. Tools, Memory and Sessions** | Function tools, API integration, error handling, state, searchable memory | A stateful support agent grounded in a local knowledge base |
 | **3. Multi-Agent Architecture** | Specialisation, coordinator routing, delegation, graph workflows | A coordinator with billing, technical, and account specialists |
 | **4. MCP and Production Design** | MCP discovery, routing, observability, security, deployment | An MCP-enabled, traced, guarded application ready for container deployment |
@@ -48,7 +48,7 @@ The implementation targets **Google ADK 2.5.0** and the stable **Gemini 3.6 Flas
 | **5** | Build a Specialist Agent Team | Billing, technical, and account agents behind a coordinator |
 | **6** | Orchestrate a Deterministic Resolution Pipeline | An ADK graph workflow with explicit routing and hand-offs |
 | **7** | Discover Tools Through MCP | A local MCP server connected through `McpToolset` |
-| **8** | Harden, Observe, and Package SupportOps | Guardrails, structured logging, tests, and a production container |
+| **8** | Harden, Observe, and Package SupportOps | An integrated multi-agent supervisor with guardrails, evidence, and a production container |
 
 The labs are designed as one continuous build. Each lab ends with a checkpoint that the next lab can use.
 
@@ -60,16 +60,17 @@ The labs are designed as one continuous build. Each lab ends with a checkpoint t
 User request
     |
     v
-SupportOps coordinator
-    |-- billing specialist ------ ticket and refund tools
-    |-- technical specialist ---- knowledge search and diagnostics
-    `-- account specialist ------ customer profile tools
+SupportOps production supervisor
+    |-- specialist-team coordinator
+    |     |-- billing specialist ----- ticket lookup + billing runbooks
+    |     |-- technical specialist --- technical runbook search
+    |     `-- account specialist ----- security runbook search
+    `-- guarded MCP specialist ------- filtered runbook discovery
              |
              v
-      shared session state
-             |
-             v
-MCP tool discovery -> policy guardrails -> traces and logs -> deployment
+policy callbacks -> session/context boundaries -> traces/evidence -> deployment
+
+workflow.py remains the deterministic graph alternative for controlled routes.
 ```
 
 ---
@@ -79,20 +80,27 @@ MCP tool discovery -> policy guardrails -> traces and logs -> deployment
 ```text
 C829-Building-Multi-Agent-Aplications-with-Gemini-ADK/
 |-- README.md
-|-- LEARNER-GUIDE.md
+|-- LG-Building Multi Agent Aplications with Gemini ADK (C829).md
 |-- courseware/
 |   |-- Building Multi Agent Aplications with Gemini ADK (C829)-v1.0.pptx
 |   |-- Building Multi Agent Aplications with Gemini ADK (C829)-v1.0.pdf
 |   |-- LG-Building Multi Agent Aplications with Gemini ADK (C829).docx
-|   `-- LP-Building Multi Agent Aplications with Gemini ADK (C829).docx
+|   |-- LG-Building Multi Agent Aplications with Gemini ADK (C829).pdf
+|   |-- LP-Building Multi Agent Aplications with Gemini ADK (C829).docx
+|   `-- LP-Building Multi Agent Aplications with Gemini ADK (C829).pdf
 |-- labs/
 |   |-- README.md
 |   `-- lab-01-...md through lab-08-...md
 |-- starter/
 |   |-- support_ops/
 |   |-- tests/
-|   |-- requirements.txt
-|   `-- Dockerfile
+|   `-- requirements.txt
+|-- solution/
+|   |-- support_ops/
+|   |-- tests/
+|   |-- eval_cases.json
+|   |-- Dockerfile
+|   `-- requirements.txt
 `-- .agents/skills/non-wsq-courseware-build/
     `-- build/                  # single-source courseware generator
 ```
@@ -140,6 +148,8 @@ adk web .
 
 Open the URL shown by ADK, select `support_ops`, and follow [Lab 1](labs/lab-01-create-the-supportops-agent.md).
 
+The `starter/` directory is the clean Lab 1 checkpoint. The fully built, offline-tested Lab 8 reference implementation is in `solution/`.
+
 ---
 
 ## Courseware
@@ -177,6 +187,6 @@ Course: [Building Multi Agent Aplications with Gemini ADK (C829)](https://www.te
 
 Powered by [Tertiary Infotech Academy Pte Ltd](https://www.tertiaryinfotech.com/)
 
-[Course Page](https://www.tertiarycourses.com.sg/building-multi-agent-aplications-with-gemini-adk.html) · [Learner Guide](LEARNER-GUIDE.md) · [Labs](labs/README.md)
+[Course Page](https://www.tertiarycourses.com.sg/building-multi-agent-aplications-with-gemini-adk.html) · [Learner Guide](<LG-Building Multi Agent Aplications with Gemini ADK (C829).md>) · [Labs](labs/README.md)
 
 </div>

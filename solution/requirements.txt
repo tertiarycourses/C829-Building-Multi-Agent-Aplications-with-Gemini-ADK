@@ -1,0 +1,8 @@
+google-adk==2.5.0
+chromadb==1.5.9
+mcp==1.29.0
+fastapi==0.141.1
+httpx==0.28.1
+uvicorn[standard]==0.52.1
+python-dotenv==1.2.2
+pytest==9.1.1
