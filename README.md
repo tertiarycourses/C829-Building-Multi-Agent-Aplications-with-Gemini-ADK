@@ -1,192 +1,227 @@
-<div align="center">
-
 # Building Multi Agent Aplications with Gemini ADK
 
-[![Course](https://img.shields.io/badge/Course-C829-1f6feb?style=for-the-badge)](https://www.tertiarycourses.com.sg/building-multi-agent-aplications-with-gemini-adk.html)
-[![Google ADK](https://img.shields.io/badge/Google_ADK-2.5.0-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://adk.dev/)
-[![Gemini](https://img.shields.io/badge/Gemini-3.6_Flash-8E75B2?style=for-the-badge&logo=googlegemini&logoColor=white)](https://ai.google.dev/gemini-api/docs/models)
-[![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
-[![License](https://img.shields.io/badge/License-Educational-fbbf24?style=for-the-badge)](#license)
+Design, build and evaluate single- and multi-agent AI applications in Python with Google's Agent Development Kit (ADK) and Gemini.
 
-**Hands-on courseware and connected labs for designing, building, testing, and preparing production-grade multi-agent applications with Google Agent Development Kit and Gemini.**
-
-[Course Page](https://www.tertiarycourses.com.sg/building-multi-agent-aplications-with-gemini-adk.html) · [Learner Guide](<LG-Building Multi Agent Aplications with Gemini ADK (C829).md>) · [Labs](labs/README.md) · [Report a Bug](https://github.com/tertiarycourses/C829-Building-Multi-Agent-Aplications-with-Gemini-ADK/issues)
-
-</div>
-
-> [!NOTE]
-> These are the official learning materials for **Building Multi Agent Aplications with Gemini ADK**.  
-> **Course Code:** `C829` · Tertiary Courses / Tertiary Infotech
+| Course detail | Information |
+|---|---|
+| Course code | `C829` |
+| Programme | Non-WSQ |
+| Duration | 2 days · 15 hours (9:30am – 5:30pm) |
+| Registration | [View course details and register](https://www.tertiarycourses.com.sg/building-multi-agent-aplications-with-gemini-adk.html) |
+| Provider | Tertiary Infotech Academy Pte Ltd (UEN 201200696W) |
 
 ---
 
-## About
+## About the course
 
-This repository contains the slide deck, Learner Guide, Lesson Plan, and eight connected hands-on labs for course C829. Learners progressively build **SupportOps**, a multi-agent service-operations assistant that can classify requests, use tools, retain session context, route work to specialists, connect to an MCP server, and apply production guardrails.
+Courseware and hands-on lab repository for *Building Multi Agent Aplications with Gemini ADK*,
+built on Google's open-source [Agent Development Kit (ADK)](https://google.github.io/adk-docs/)
+and the Gemini model family. Across 18 labs you move from a first ADK agent to tool-using agents,
+multi-agent handoff, workflow agents (Sequential, Parallel, Loop, Agent-as-a-Tool), guardrails,
+structured output, MCP, agentic RAG and a Streamlit app.
 
-The implementation targets **Google ADK 2.5.0** and the stable **Gemini 3.6 Flash** model. Course examples use synthetic support tickets and placeholder secrets only. The requirements deliberately pin the MCP Python SDK to the compatible 1.x API (`mcp==1.29.0`) used by the ADK 2.5 MCP integration.
+---
 
-### What You Will Learn
+## Learning outcomes
 
-| Topic | Focus | Working outcome |
+| | Outcome |
+|---|---|
+| **LO1** | Analyze the range of LLM applications using Generative AI (GAI) and identify their industrial use cases |
+| **LO2** | Establish Google Gemini GAI designs and assess improvements on engineering processes |
+| **LO3** | Develop LLM applications and assess its feasibility |
+| **LO4** | Evaluate the performance effectiveness of Retrieval Augmented Generation (RAG) |
+
+---
+
+## Topics covered
+
+| Topic | Title | Labs |
 |---|---|---|
-| **1. Single Agent Foundations** | Agent lifecycle, model instructions, structured output, sessions | A runnable ticket-triage agent with typed JSON output in active session state |
-| **2. Tools, Memory and Sessions** | Function tools, API integration, error handling, state, searchable memory | A stateful support agent grounded in a local knowledge base |
-| **3. Multi-Agent Architecture** | Specialisation, coordinator routing, delegation, graph workflows | A coordinator with billing, technical, and account specialists |
-| **4. MCP and Production Design** | MCP discovery, routing, observability, security, deployment | An MCP-enabled, traced, guarded application ready for container deployment |
+| 1 | Overview of Agentic AI in Gemini ADK | 1–4 |
+| 2 | Build A Multi Agent App with Gemini ADK | 5–12 |
+| 3 | Build Agentic AI RAG in Gemini ADK | 13–15 |
+| 4 | Build an Agentic AI App with Gemini Agent ADK and Streamlit | 16–18 |
 
 ---
 
-## Lab Activities
+## Quick Start
 
-| # | Lab | You build |
-|---|---|---|
-| **1** | Create the SupportOps Agent | A minimal ADK project running in the development web UI |
-| **2** | Add Structured Triage and Sessions | Typed ticket classification with per-user session state |
-| **3** | Connect Reliable Function Tools | Ticket lookup and update tools with validation and recoverable errors |
-| **4** | Add Searchable Knowledge and Memory | Local semantic retrieval plus cross-turn user preferences |
-| **5** | Build a Specialist Agent Team | Billing, technical, and account agents behind a coordinator |
-| **6** | Orchestrate a Deterministic Resolution Pipeline | An ADK graph workflow with explicit routing and hand-offs |
-| **7** | Discover Tools Through MCP | A local MCP server connected through `McpToolset` |
-| **8** | Harden, Observe, and Package SupportOps | An integrated multi-agent supervisor with guardrails, evidence, and a production container |
-
-The labs are designed as one continuous build. Each lab ends with a checkpoint that the next lab can use.
-
----
-
-## Architecture
-
-```text
-User request
-    |
-    v
-SupportOps production supervisor
-    |-- specialist-team coordinator
-    |     |-- billing specialist ----- ticket lookup + billing runbooks
-    |     |-- technical specialist --- technical runbook search
-    |     `-- account specialist ----- security runbook search
-    `-- guarded MCP specialist ------- filtered runbook discovery
-             |
-             v
-policy callbacks -> session/context boundaries -> traces/evidence -> deployment
-
-workflow.py remains the deterministic graph alternative for controlled routes.
-```
-
----
-
-## Repository Structure
-
-```text
-C829-Building-Multi-Agent-Aplications-with-Gemini-ADK/
-|-- README.md
-|-- LG-Building Multi Agent Aplications with Gemini ADK (C829).md
-|-- courseware/
-|   |-- Building Multi Agent Aplications with Gemini ADK (C829)-v1.0.pptx
-|   |-- Building Multi Agent Aplications with Gemini ADK (C829)-v1.0.pdf
-|   |-- LG-Building Multi Agent Aplications with Gemini ADK (C829).docx
-|   |-- LG-Building Multi Agent Aplications with Gemini ADK (C829).pdf
-|   |-- LP-Building Multi Agent Aplications with Gemini ADK (C829).docx
-|   `-- LP-Building Multi Agent Aplications with Gemini ADK (C829).pdf
-|-- labs/
-|   |-- README.md
-|   `-- lab-01-...md through lab-08-...md
-|-- starter/
-|   |-- support_ops/
-|   |-- tests/
-|   `-- requirements.txt
-|-- solution/
-|   |-- support_ops/
-|   |-- tests/
-|   |-- eval_cases.json
-|   |-- Dockerfile
-|   `-- requirements.txt
-`-- .agents/skills/non-wsq-courseware-build/
-    `-- build/                  # single-source courseware generator
-```
-
----
-
-## Getting Started
-
-### Prerequisites
-
-- Python 3.10 or later
-- A Google AI Studio API key stored as `GOOGLE_API_KEY`
-- Git and a modern web browser
-- Docker Desktop for the final packaging lab
-
-### 1. Clone the repository
+**Prerequisites:** Python 3.13+, [uv](https://docs.astral.sh/uv/), and a free Gemini API key from
+[Google AI Studio](https://aistudio.google.com).
 
 ```bash
 git clone https://github.com/tertiarycourses/C829-Building-Multi-Agent-Aplications-with-Gemini-ADK.git
-cd C829-Building-Multi-Agent-Aplications-with-Gemini-ADK
+cd C829-Building-Multi-Agent-Aplications-with-Gemini-ADK/labs
+uv sync
 ```
 
-### 2. Create an isolated environment
+Create a `.env` file in the `labs/` folder:
+
+```env
+GOOGLE_GENAI_USE_VERTEXAI=0
+GOOGLE_API_KEY=your-google-api-key
+OPENWEATHER_API_KEY=your-openweather-key   # optional, tool labs
+TAVILY_API_KEY=your-tavily-key             # optional, search labs
+```
+
+> **Never commit your `.env` file or API keys.** It is git-ignored in this repository.
+
+Run any agent:
 
 ```bash
-cd starter
-python -m venv .venv
+uv run adk run <agent_folder>   # terminal chat
+uv run adk web                  # browser IDE at http://localhost:8000
 ```
 
-Activate it with `.venv\\Scripts\\Activate.ps1` on Windows PowerShell or `source .venv/bin/activate` on macOS/Linux, then install the dependencies:
+---
 
-```bash
-python -m pip install -r requirements.txt
+## Labs
+
+| # | Lab | Agent folder | Topic |
+|---|---|---|---|
+| 1 | Set Up the Gemini ADK Environment and Get an API Key | [`lab01`](labs/lab01/README.md) | 1 |
+| 2 | Build Your First ADK Agent — A Retail Banking Assistant | [`lab02`](labs/lab02/README.md) | 1 |
+| 3 | Give an Agent Tools — Live Weather and Web Search | [`lab03`](labs/lab03/README.md) | 1 |
+| 4 | Swap the Model — Running an ADK Agent on a Non-Gemini LLM | [`lab04`](labs/lab04/README.md) | 1 |
+| 5 | Give an Agent Memory — Sessions, State and the Runner | [`lab05`](labs/lab05/README.md) | 2 |
+| 6 | Inspect the Agent Loop — Events, Tool Calls and Final Responses | [`lab06`](labs/lab06/README.md) | 2 |
+| 7 | Multi-Agent Handoff — Joke Generator to Translator | [`lab07`](labs/lab07/README.md) | 2 |
+| 8 | Hierarchical Multi-Agent System — The Tutor Agent | [`lab08`](labs/lab08/README.md) | 2 |
+| 9 | Sequential Workflow Agent — Singapore Transport Route Planner | [`lab09`](labs/lab09/README.md) | 2 |
+| 10 | Add a Guardrail — Blocking Unsafe Requests with a Callback | [`lab10`](labs/lab10/README.md) | 2 |
+| 11 | Structured Output — Forcing Valid JSON with Pydantic | [`lab11`](labs/lab11/README.md) | 2 |
+| 12 | Connect External Tools with MCP — StreamableHTTP and SSE | [`lab12`](labs/lab12/README.md) | 2 |
+| 13 | Load, Split and Embed Documents into a Vector Store | [`lab13`](labs/lab13/README.md) | 3 |
+| 14 | Build the Agentic RAG Agent — Retrieval as a Tool | [`lab14`](labs/lab14/README.md) | 3 |
+| 15 | Evaluate RAG Performance — Retrieval Quality and Groundedness | [`lab15`](labs/lab15/README.md) | 3 |
+| 16 | Declarative Agents — Configuring a Multi-Agent System in YAML | [`lab16`](labs/lab16/README.md) | 4 |
+| 17 | Ship the Agent as a Web App with Streamlit | [`lab17`](labs/lab17/README.md) | 4 |
+| 18 | Capstone — Build Your Own Multi-Agent Application | [`lab18`](labs/lab18/README.md) | 4 |
+
+Every lab is a **self-contained folder** holding its own agent script, data files and a
+`README.md` lab sheet. See [labs/LABS.md](labs/LABS.md) for the full index.
+
+---
+
+## Core ADK Patterns
+
+**Define an agent**
+
+```python
+from google.adk.agents import Agent
+
+root_agent = Agent(
+    model='gemini-2.0-flash',
+    name='root_agent',
+    description='A helpful assistant for user questions.',
+    instruction='Answer clearly and concisely.',
+)
 ```
 
-### 3. Configure Gemini safely
+**Add a tool** — the docstring and type hints are the contract the model reads.
 
-Copy `.env.example` to `.env` and replace the placeholder locally. Never commit `.env` or paste a real key into source code, prompts, screenshots, or lab submissions.
+```python
+def get_weather(city: str) -> dict:
+    """Retrieves the current weather for a specified city.
 
-### 4. Run the agent
+    Args:
+        city (str): The name of the city.
 
-```bash
-adk web .
+    Returns:
+        dict: status and result or error msg.
+    """
+    return {"status": "success", "report": "..."}
+
+agent = Agent(..., tools=[get_weather])
 ```
 
-Open the URL shown by ADK, select `support_ops`, and follow [Lab 1](labs/lab-01-create-the-supportops-agent.md).
+**Multi-agent handoff**
 
-The `starter/` directory is the clean Lab 1 checkpoint. The fully built, offline-tested Lab 8 reference implementation is in `solution/`.
+```python
+root_agent = Agent(
+    name='root_agent',
+    sub_agents=[math_tutor_agent, physics_tutor_agent, history_tutor_agent],
+    instruction='Route each question to the right specialist.',
+)
+```
+
+**Sequential workflow**
+
+```python
+from google.adk.agents import SequentialAgent
+
+workflow = SequentialAgent(
+    name='workflow_agent',
+    sub_agents=[input_agent, research_agent, report_agent],
+)
+```
+
+**Guardrail** — return `None` to allow, an `LlmResponse` to block.
+
+```python
+def block_keyword_guardrail(callback_context, llm_request):
+    if "BLOCK" in last_user_message.upper():
+        return LlmResponse(content=types.Content(
+            role="model", parts=[types.Part(text="I cannot process this request.")]))
+    return None
+
+agent = Agent(..., before_model_callback=block_keyword_guardrail)
+```
+
+**Structured output** — note an agent with `output_schema` cannot also use tools.
+
+```python
+from pydantic import BaseModel
+
+class Recipe(BaseModel):
+    title: str
+    ingredients: list[str]
+    cooking_time: int
+
+agent = Agent(..., output_schema=Recipe)
+```
 
 ---
 
-## Courseware
+## Courseware (public package)
 
-All learner-facing artifacts are generated from one content source so the topic order, learning outcomes, lab titles, lab numbers, and schedule stay aligned. The generated PPT/PDF, Learner Guide, and Lesson Plan are in [`courseware/`](courseware/); full executable lab instructions are in [`labs/`](labs/).
+| Artifact | File |
+|---|---|
+| Trainer Slides | [Building Multi Agent Aplications with Gemini ADK-v1.0.pptx](<courseware/Building Multi Agent Aplications with Gemini ADK-v1.0.pptx>) |
+| Learner Slides (PDF) | [Building Multi Agent Aplications with Gemini ADK-v1.0.pdf](<courseware/Building Multi Agent Aplications with Gemini ADK-v1.0.pdf>) |
+| Lesson Plan | [LP-Building Multi Agent Aplications with Gemini ADK.docx](<courseware/LP-Building Multi Agent Aplications with Gemini ADK.docx>) |
+| Lesson Plan (PDF) | [LP-Building Multi Agent Aplications with Gemini ADK.pdf](<courseware/LP-Building Multi Agent Aplications with Gemini ADK.pdf>) |
+| Learner Guide | [LG-Building Multi Agent Aplications with Gemini ADK.docx](<courseware/LG-Building Multi Agent Aplications with Gemini ADK.docx>) |
+| Learner Guide (PDF) | [LG-Building Multi Agent Aplications with Gemini ADK.pdf](<courseware/LG-Building Multi Agent Aplications with Gemini ADK.pdf>) |
+| Learner Guide (Markdown) | [LG-Building Multi Agent Aplications with Gemini ADK.md](<LG-Building Multi Agent Aplications with Gemini ADK.md>) |
 
----
+The **Learner Guide** carries the full step-by-step instructions for all 18 labs, plus reference
+sections on core ADK patterns, evaluating a RAG pipeline, and assessing the feasibility of an
+agent application.
 
-## Contributing
+The **Trainer Slides** (v1.0, 152 slides) teach each lab as a four-part unit — briefing →
+process map → procedure with the actual commands → verification with troubleshooting — alongside
+comparison matrices, decision maps, worked code examples and native charts. Slide transitions are
+deliberately restrained (content fades, section dividers push), with click-through reveals on the
+process maps so a stage can be discussed before the next appears.
 
-Corrections and improvements are welcome. Create a focused branch, include a reproducible test or verification note, and open a pull request. Do not commit API keys, customer data, `.env` files, or generated virtual environments.
-
----
-
-## License
-
-This material is provided for educational use as part of course **C829**. © Tertiary Infotech Academy Pte Ltd. All rights reserved.
-
----
-
-## Developed By
-
-**Tertiary Infotech Academy Pte Ltd** · [Tertiary Courses](https://www.tertiarycourses.com.sg/)  
-Course: [Building Multi Agent Aplications with Gemini ADK (C829)](https://www.tertiarycourses.com.sg/building-multi-agent-aplications-with-gemini-adk.html)
-
-## Acknowledgements
-
-- [Google Agent Development Kit](https://adk.dev/) — agent and workflow framework
-- [Google Gemini](https://ai.google.dev/gemini-api/docs/models) — language model family
-- [Model Context Protocol](https://modelcontextprotocol.io/) — interoperable tool and context protocol
+**Distribution:** slides, Lesson Plan, Learner Guide and labs are published here. Any assessment
+material and source references are kept private and are never committed to this repository.
 
 ---
 
-<div align="center">
+## Resources
 
-Powered by [Tertiary Infotech Academy Pte Ltd](https://www.tertiaryinfotech.com/)
+- [Google ADK Documentation](https://google.github.io/adk-docs/)
+- [Google AI Studio](https://aistudio.google.com) — free Gemini API keys
+- [Course page](https://www.tertiarycourses.com.sg/building-multi-agent-aplications-with-gemini-adk.html)
+- [LMS / TMS](https://lms-tms.tertiaryinfotech.com)
 
-[Course Page](https://www.tertiarycourses.com.sg/building-multi-agent-aplications-with-gemini-adk.html) · [Learner Guide](<LG-Building Multi Agent Aplications with Gemini ADK (C829).md>) · [Labs](labs/README.md)
+## Support
 
-</div>
+**Tertiary Infotech Academy Pte Ltd** · UEN 201200696W
+Email: enquiry@tertiaryinfotech.com · Tel: +65 6100 0613 · [tertiarycourses.com.sg](https://www.tertiarycourses.com.sg)
+
+---
+
+© 2026 Tertiary Infotech Academy Pte Ltd. All rights reserved.

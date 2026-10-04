@@ -27,3 +27,11 @@ courseware/archive/
 
 # Learner working copy created by the labs
 /work/
+
+# WSQ source repo (read-only conversion input) and any assessment set — never committed
+source-wsq/
+assessment/
+
+# ADK / lab artifacts
+.adk/
+**/chroma_db/

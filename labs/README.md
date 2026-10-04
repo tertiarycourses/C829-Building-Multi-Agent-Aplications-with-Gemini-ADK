@@ -1,41 +1,112 @@
-# Building Multi Agent Aplications with Gemini ADK (C829) — Hands-On Labs
+# Gemini Agent ADK — Hands-On Labs
 
-8 labs across 4 topics · 2 days · 15 scheduled hours
+Lab environment for the course **Building Multi Agent Aplications with Gemini ADK**
+(C829), built on [Google's Agent Development Kit](https://google.github.io/adk-docs/).
 
-Work through the labs in order — each one builds on the artifacts you produced in the labs before it.
+Every lab is a **self-contained folder** — `lab01` … `lab18` — holding that lab's agent script,
+any data files it needs, and a `README.md` lab sheet. See [LABS.md](LABS.md) for the full index.
 
+## Prerequisites
 
-## Topic 1 — Single Agent Foundations
+- Python 3.13 or later
+- [uv](https://docs.astral.sh/uv/) package manager
+- A free Gemini API key from [Google AI Studio](https://aistudio.google.com)
 
-| # | Lab | Tools | You Build |
-|---|-----|-------|-----------|
-| 1 | [Create the SupportOps Agent](lab-01-create-the-supportops-agent.md) | Python 3.10+, Google ADK 2.5.0, Gemini 3.6 Flash, ADK Web | A clean work/ project containing a discoverable support_ops.root_agent and a captured first-turn event trace. |
-| 2 | [Add Structured Triage and Sessions](lab-02-add-structured-triage-and-sessions.md) | Google ADK, Pydantic, ADK Web session and event inspector, pytest | A typed TicketTriage response with category, urgency, summary, and next_action stored as latest_triage in the active session. |
+## Setup (once)
 
-## Topic 2 — Tools, Memory and Sessions
+```bash
+cd labs
+uv sync                 # creates .venv and installs google-adk + all dependencies
+cp .env.example .env    # then paste your GOOGLE_API_KEY into .env
+```
 
-| # | Lab | Tools | You Build |
-|---|-----|-------|-----------|
-| 3 | [Connect Reliable Function Tools](lab-03-connect-reliable-function-tools.md) | Google ADK Function Tools, FastAPI, Uvicorn, HTTPX, pytest | A tool-enabled SupportOps agent that can retrieve a synthetic ticket and safely change its priority through a local HTTP API. |
-| 4 | [Add Searchable Knowledge and Memory](lab-04-add-searchable-knowledge-and-memory.md) | Chroma 1.5.9, Google ADK ToolContext, session state, pytest | A SupportOps agent with semantic runbook retrieval, source identifiers, and a user-scoped response-style preference. |
+There is **one `.env` for all labs**, in this folder. Every lab loads it automatically.
+It is git-ignored — never commit your keys.
 
-## Topic 3 — Multi-Agent Architecture
+```env
+GOOGLE_GENAI_USE_VERTEXAI=0
+GOOGLE_API_KEY=your-google-api-key
+OPENWEATHER_API_KEY=your-openweather-key   # optional — lab03, lab05, lab06, lab10
+TAVILY_API_KEY=your-tavily-key             # optional — lab03, lab05, lab06, lab10
+OPENAI_API_KEY=your-openai-key             # optional — lab04 only
+```
 
-| # | Lab | Tools | You Build |
-|---|-----|-------|-----------|
-| 5 | [Build a Specialist Agent Team](lab-05-build-a-specialist-agent-team.md) | Google ADK collaborative agents, Gemini 3.6 Flash, specialist tools, ADK trace inspector | A collaborative ADK agent team whose coordinator delegates synthetic requests to billing, technical, or account specialists. |
-| 6 | [Orchestrate a Deterministic Resolution Pipeline](lab-06-orchestrate-a-deterministic-resolution-pipeline.md) | Google ADK 2.x Workflow, Event routing, Pydantic schemas, Gemini specialist nodes, pytest | A SupportOps Workflow with explicit START → triage → route → specialist edges for billing, technical, account, and general requests. |
+Verify your setup:
 
-## Topic 4 — MCP and Production Design
+```bash
+uv run python lab01/verify_setup.py
+```
 
-| # | Lab | Tools | You Build |
-|---|-----|-------|-----------|
-| 7 | [Discover Tools Through MCP](lab-07-discover-tools-through-mcp.md) | Model Context Protocol Python SDK, FastMCP, ADK McpToolset, stdio transport, ADK trace inspector | A local SupportOps MCP server plus an ADK client agent that discovers and calls only lookup_runbook. |
-| 8 | [Harden, Observe, and Package SupportOps](lab-08-harden-observe-and-package-supportops.md) | ADK callbacks, Python logging, pytest, ADK API server, Docker, OpenTelemetry-ready configuration | A production-oriented multi-agent SupportOps supervisor with the specialist hierarchy, tested policy callbacks, bounded MCP access, structured telemetry, executable evaluation cases, and a Docker image definition. |
+## Running a lab
+
+```bash
+uv run adk run lab02    # terminal chat with that lab's agent
+uv run adk web          # browser IDE at http://localhost:8000 — pick any lab
+```
+
+Two labs are run differently:
+
+```bash
+uv run streamlit run lab17/app.py   # lab17 is a Streamlit web app
+uv run python lab05/agent.py        # labs 05, 06, 12 are scripts with their own main()
+```
+
+## The labs
+
+| # | Folder | Lab | Topic |
+|---|---|---|---|
+| 1 | `lab01` | Set Up the Gemini ADK Environment and Get an API Key | 1 |
+| 2 | `lab02` | Build Your First ADK Agent — A Retail Banking Assistant | 1 |
+| 3 | `lab03` | Give an Agent Tools — Live Weather and Web Search | 1 |
+| 4 | `lab04` | Swap the Model — Running an ADK Agent on a Non-Gemini LLM | 1 |
+| 5 | `lab05` | Give an Agent Memory — Sessions, State and the Runner | 2 |
+| 6 | `lab06` | Inspect the Agent Loop — Events, Tool Calls and Final Responses | 2 |
+| 7 | `lab07` | Multi-Agent Handoff — Joke Generator to Translator | 2 |
+| 8 | `lab08` | Hierarchical Multi-Agent System — The Tutor Agent | 2 |
+| 9 | `lab09` | Sequential Workflow Agent — Singapore Transport Route Planner | 2 |
+| 10 | `lab10` | Add a Guardrail — Blocking Unsafe Requests with a Callback | 2 |
+| 11 | `lab11` | Structured Output — Forcing Valid JSON with Pydantic | 2 |
+| 12 | `lab12` | Connect External Tools with MCP — StreamableHTTP and SSE | 2 |
+| 13 | `lab13` | Load, Split and Embed Documents into a Vector Store | 3 |
+| 14 | `lab14` | Build the Agentic RAG Agent — Retrieval as a Tool | 3 |
+| 15 | `lab15` | Evaluate RAG Performance — Retrieval Quality and Groundedness | 3 |
+| 16 | `lab16` | Declarative Agents — Configuring a Multi-Agent System in YAML | 4 |
+| 17 | `lab17` | Ship the Agent as a Web App with Streamlit | 4 |
+| 18 | `lab18` | Capstone — Design, Build and Assess Your Own Multi-Agent Application | 4 |
+
+## Key ADK concepts
+
+| Concept | Where you meet it |
+|---|---|
+| `Agent` — model, name, description, instruction | lab02 |
+| Function tools (docstring + type hints as the contract) | lab03 |
+| `LiteLlm` — running on a non-Gemini model | lab04 |
+| `Session` + `SessionService` + `Runner` | lab05 |
+| Events: `function_call`, `function_response`, final response | lab06 |
+| `sub_agents` and `transfer_to_agent` handoff | lab07, lab08 |
+| `SequentialAgent` workflows | lab09 |
+| `before_model_callback` guardrails | lab10 |
+| Pydantic `output_schema` | lab11 |
+| Model Context Protocol (`McpToolset`) | lab12 |
+| RAG: chunk → embed → store → retrieve | lab13, lab14, lab15 |
+| YAML agent configuration | lab16 |
+| Streamlit front end for an agent | lab17 |
+
+## Troubleshooting
+
+| Symptom | Fix |
+|---|---|
+| `ModuleNotFoundError: google.adk` | Run `uv sync` from the `labs/` folder |
+| Authentication / 401 errors | Check `.env` exists in `labs/` and `GOOGLE_API_KEY` has no quotes or trailing spaces |
+| `adk` command not found | Prefix with `uv run`, e.g. `uv run adk web` |
+| A lab does not appear in `adk web` | Run `adk web` from `labs/`, not from inside a lab folder |
+| RAG lab returns nothing | Delete `lab13/chroma_db` (or `lab14`/`lab15`) and re-run to re-index |
+
+## Resources
+
+- [Google ADK Documentation](https://google.github.io/adk-docs/)
+- [Google AI Studio](https://aistudio.google.com) — free Gemini API keys
 
 ---
 
-> Use only the synthetic ticket, customer, and knowledge data supplied in this repository. Store GOOGLE_API_KEY in a local .env file, never in source code, prompts, screenshots, logs, or Git.
-
-
-_Tertiary Infotech Academy Pte Ltd · C829 · v1.0 (11 August 2026)_
+© 2026 Tertiary Infotech Academy Pte Ltd. All rights reserved.
